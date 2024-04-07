@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -8,7 +9,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ProductsComponent implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private productService : ProductService) {
   }
 
   ngOnInit(): void {
@@ -16,7 +17,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getProducts() {
-    this.http.get<Array<any>>('http://localhost:8089/products')
+    this.productService.getProducts()
       .subscribe({
         next: data => {
           this.products = data;
@@ -30,15 +31,10 @@ export class ProductsComponent implements OnInit {
   products :Array<any> =[];
 
   handleCheckProduct(product: any) {
-    this.http.patch<any>(`http://localhost:8089/products/${product.id}`,
-      {checked: !product.checked}).subscribe({
+    this.productService.checkProduct(product)
+      .subscribe({
       next: updatedProduct => {
-        this.products.map(p => {
-          if (p.id == product.id) {
-            return updatedProduct;
-          }
-          return p;
-        })
+        this.getProducts();
       }
     })
   }
