@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../model/product.model';
@@ -7,16 +7,13 @@ import { Product } from '../model/product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  searchProduct(k: any) {
-      throw new Error('Method not implemented.');
-  }
 
   constructor(private http:HttpClient) { }
 
   url : string = "http://localhost:8089/products/"
 
-  public getProducts() : Observable<Array<Product>> {
-    return this.http.get<Array<Product>>(this.url);
+  public searchProducts(keyword: string = "", page : number = 1, size : number = 4){
+    return this.http.get(this.url+"?name_like="+keyword+"&_page="+page+"&_limit="+size, {observe:'response'});
   }
 
   public checkProduct(product:Product) : Observable<Product> {
@@ -29,12 +26,14 @@ export class ProductService {
   }
 
   public saveProduct(product:Product):Observable<Product> {
-    return this.http.post<Product>(this.url,
-      product)
+    return this.http.post<Product>(this.url, product);
   }
 
-  public searchProducts(keyword : string) : Observable<Array<Product>> {
-    return this.http.get<Array<Product>>(`http://localhost:8089/products?name_like=${keyword}`);
+  getProductById(productId: number): Observable<Product> {
+    return this.http.get<Product>(this.url+productId);
   }
 
+  updateProduct(product: Product) : Observable<Product> {
+    return this.http.put<Product>(this.url+product.id, product);
+  }
 }

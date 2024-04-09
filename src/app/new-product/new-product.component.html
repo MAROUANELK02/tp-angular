@@ -14,7 +14,9 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Checked</label>
-              <input type="checkbox" class="form-check-input" formControlName="checked">
+              <input type="checkbox"
+                     style="margin-left: 20px"
+                     class="form-check-input" formControlName="checked">
             </div>
             <button [disabled]="productForm.invalid" class="btn btn-success">Save</button>
           </form>

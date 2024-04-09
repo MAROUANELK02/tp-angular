@@ -21,20 +21,39 @@
           <td>
             <button
               (click)="handleCheckProduct(product)"
-              class="btn btn-outline-success">
+              class="btn btn-outline-success"
+            >
               <i [class]="product.checked ?
               'bi bi-check' : 'bi bi-circle'"></i>
             </button>
+          </td>
+          <td>
             <button (click)="handleDeleteProduct(product)"
-              class="btn btn-outline-danger m-2">
+              class="btn btn-outline-danger">
               <i class="bi bi-trash">
-
+              </i>
+            </button>
+          </td>
+          <td>
+            <button (click)="handleEditProduct(product)"
+                    class="btn btn-outline-success">
+              <i class="bi bi-pencil">
               </i>
             </button>
           </td>
         </tr>
         </thead>
       </table>
+      <ul class="nav nav-pills">
+        <li *ngFor="let page of [].constructor(this.totalPages); let i=index">
+          <button (click)="handleGoToPage(i+1)"
+                  [ngClass] = "currentPage==(i+1) ?
+                  'btn btn-success m-1':'btn btn-outline-success m-1'"
+                  >
+            {{(i+1)}}
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
