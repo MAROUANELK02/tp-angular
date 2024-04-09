@@ -13,21 +13,21 @@
       "checked": true
     },
     {
-      "id": "3",
-      "name": "Keyboard",
-      "price": 100,
-      "checked": false
-    },
-    {
       "id": "4",
       "name": "Monitor",
       "price": 800,
-      "checked": true
+      "checked": false
     },
     {
       "id": "5",
       "name": "Headphones",
       "price": 150,
+      "checked": true
+    },
+    {
+      "id": "ef2a",
+      "name": "tv",
+      "price": "3500",
       "checked": true
     }
   ]
