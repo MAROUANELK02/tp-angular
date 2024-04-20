@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../model/product.model';
 import { Router } from '@angular/router';
+import { AppStateService } from '../services/app-state.service';
 
 @Component({
   selector: 'app-products',
@@ -10,14 +11,10 @@ import { Router } from '@angular/router';
 })
 
 export class ProductsComponent implements OnInit {
-  public products : Array<Product> = [];
-  public keyword: string = "";
-  public totalPages : number = 0;
-  public pageSize : number = 3;
-  public currentPage : number = 1;
 
   constructor(private productService : ProductService,
-              private router : Router) {
+              private router : Router,
+              public appState : AppStateService) {
   }
 
   ngOnInit(): void {
@@ -25,16 +22,30 @@ export class ProductsComponent implements OnInit {
   }
 
   searchProducts() {
-    this.productService.searchProducts(this.keyword,this.currentPage,this.pageSize).subscribe(
+    this.appState.setProductState({
+      status: "LOADING"
+    })
+    this.productService.searchProducts(this.appState.productsState.keyword,
+      this.appState.productsState.currentPage,
+      this.appState.productsState.pageSize).subscribe(
       {
         next: (resp) => {
-          this.products = resp.body as Product[];
+          let products = resp.body as Product[];
           let totalProducts : number = parseInt(resp.headers.get('x-total-count')!);
-          let res : number = totalProducts % this.pageSize;
-          this.totalPages = res != 0 ? Math.floor(totalProducts / this.pageSize) + 1 : Math.floor(totalProducts / this.pageSize);
-          console.log(this.totalPages)
+          let res : number = totalProducts % this.appState.productsState.pageSize;
+          let totalPages = res != 0 ? Math.floor(totalProducts / this.appState.productsState.pageSize) + 1 : Math.floor(totalProducts / this.appState.productsState.pageSize);
+          this.appState.setProductState({
+            products: products,
+            totalProducts: totalProducts,
+            totalPages: totalPages,
+            status: "LOADED"
+          });
         },
         error: err => {
+          this.appState.setProductState({
+            status: "ERROR",
+            errorMessage: err.message
+          });
           console.log(err);
         }
       }
@@ -61,7 +72,7 @@ export class ProductsComponent implements OnInit {
   }
 
   handleGoToPage(page : number) {
-    this.currentPage = page;
+    this.appState.productsState.currentPage = page;
     this.searchProducts();
   }
 

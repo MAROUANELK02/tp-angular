@@ -10,6 +10,10 @@ import { HttpClientModule} from "@angular/common/http";
 import { ProductService } from './services/product.service';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { AppStateService } from './services/app-state.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AppErrorsComponent } from './app-errors/app-errors.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,9 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     ProductsComponent,
     NewProductComponent,
     EditProductComponent,
+    DashboardComponent,
+    NavbarComponent,
+    AppErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +34,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     FormsModule
   ],
   providers: [
-    ProductService
+    ProductService,
+    AppStateService
   ],
   bootstrap: [AppComponent]
 })

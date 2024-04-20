@@ -3,8 +3,8 @@
     {
       "id": "1",
       "name": "Computer",
-      "price": 5600,
-      "checked": false
+      "price": "6000",
+      "checked": true
     },
     {
       "id": "2",
@@ -28,13 +28,13 @@
       "id": "ef2a",
       "name": "tv",
       "price": "3500",
-      "checked": true
+      "checked": false
     },
     {
-      "name": "micro",
-      "price": "500",
-      "checked": true,
-      "id": "i1HGHz4"
+      "name": "hello",
+      "price": "1500",
+      "checked": false,
+      "id": "USqqlva"
     }
   ]
 }
