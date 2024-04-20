@@ -35,6 +35,12 @@
       "price": "1500",
       "checked": false,
       "id": "USqqlva"
+    },
+    {
+      "name": "micro",
+      "price": "2500",
+      "checked": true,
+      "id": "lipUy7u"
     }
   ]
 }
